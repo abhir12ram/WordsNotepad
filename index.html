@@ -4,11 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>📘 Word Notepad</title>
+
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
+    /* ------------------ OPTIMIZED CLEAN CSS ------------------ */
     body {
       font-family: 'Roboto', sans-serif;
-      background-color: #F5F7FA; /* Lighter, modern background */
+      background-color: #F5F7FA;
       margin: 0;
       padding: 20px;
       color: #333;
@@ -16,57 +20,42 @@
     }
 
     .container {
-      max-width: 550px; /* Slightly wider for better content display */
+      max-width: 550px;
       margin: auto;
       background: #fff;
       padding: 25px;
-      border-radius: 16px; /* More rounded corners */
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08); /* Softer, deeper shadow */
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
     }
 
     h2 {
       text-align: center;
-      color: #4A90E2; /* Modern blue */
-      font-size: 26px; /* Slightly larger title */
+      color: #4A90E2;
+      font-size: 26px;
       margin-bottom: 20px;
       font-weight: 700;
     }
 
     input, textarea, button {
       width: 100%;
-      padding: 12px 15px; /* More padding */
+      padding: 12px 15px;
       margin-top: 10px;
       margin-bottom: 10px;
-      border: 1px solid #DDE4E9; /* Lighter border */
-      border-radius: 10px; /* Consistent rounded corners */
+      border: 1px solid #DDE4E9;
+      border-radius: 10px;
       font-size: 16px;
       outline: none;
       transition: all 0.3s ease;
       font-family: 'Open Sans', sans-serif;
     }
-    
-    input:focus, textarea:focus {
-      border-color: #4A90E2; /* Blue focus highlight */
-      box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2); /* Subtle glow */
-    }
-    
-    label {
-      font-size: 15px;
-      color: #555;
-      font-weight: 600;
-      display: block;
-      margin-top: 15px;
-      margin-bottom: 5px;
-    }
 
-    textarea {
-      resize: vertical; /* Allow vertical resize */
-      min-height: 80px;
-      max-height: 150px;
+    input:focus, textarea:focus {
+      border-color: #4A90E2;
+      box-shadow: 0 0 0 3px rgba(74,144,226,0.2);
     }
 
     button {
-      background-color: #4A90E2; /* Main button color */
+      background-color: #4A90E2;
       color: white;
       border: none;
       cursor: pointer;
@@ -75,62 +64,22 @@
     }
 
     button:hover {
-      background-color: #357ABD; /* Darker blue on hover */
-      box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3);
+      background-color: #357ABD;
+      box-shadow: 0 4px 10px rgba(74,144,226,0.3);
       transform: translateY(-1px);
     }
-    
+
     #toggleFeaturesBtn {
-        background-color: #6C757D; /* Grey for secondary action */
+      background-color: #6C757D;
     }
+
     #toggleFeaturesBtn:hover {
-        background-color: #5A6268;
+      background-color: #5A6268;
     }
 
-    /* Word container card */
-    .word-item {
-      background: #FFFFFF;
-      border: 1px solid #E0E6EB; /* Subtle border */
-      border-left: 5px solid #4A90E2; /* Accent border */
-      padding: 12px 15px;
-      border-radius: 12px;
-      margin-top: 12px;
-      font-size: 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center; 
-      gap: 12px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.05); /* Softer item shadow */
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .word-item:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-    }
-
-    .word-info {
-      flex: 1;
-      margin-left: 5px;
-    }
-
-    .word-title {
-      font-weight: 700;
-      color: #333;
-      margin-bottom: 3px;
-      font-size: 17px;
-    }
-
-    .word-meaning {
-      color: #666;
-      font-size: 14px;
-      line-height: 1.4;
-    }
-    
-    /* Date group */
     .date-group {
-      background: #EAF3FC; /* Very light blue background for groups */
-      border: 1px solid #C4DFFB; /* Light blue border */
+      background: #EAF3FC;
+      border: 1px solid #C4DFFB;
       border-radius: 14px;
       padding: 15px;
       margin-top: 25px;
@@ -139,471 +88,277 @@
 
     .date-header {
       font-weight: 700;
-      color: #2F5F8F; /* Darker blue for header */
+      color: #2F5F8F;
       font-size: 18px;
       margin-bottom: 15px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    
+
     .header-btns {
-        display: flex;
-        gap: 8px; 
+      display: flex;
+      gap: 8px;
     }
 
     .toggle-btn, .delete-btn, .select-all-btn {
       border: none;
       border-radius: 50%;
-      font-size: 15px; 
-      width: 32px; /* Slightly larger buttons */
+      width: 32px;
       height: 32px;
-      text-align: center;
+      font-size: 15px;
       cursor: pointer;
-      transition: 0.3s ease;
-      flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    
-    .toggle-btn {
-      background-color: #4A90E2;
-      color: white;
+      transition: .3s;
     }
 
-    .toggle-btn:hover {
-      background-color: #357ABD;
-      transform: translateY(-1px);
-    }
-    
-    .select-all-btn {
-        background-color: #28A745; /* Green for select all */
-        color: white;
-        font-size: 15px;
-    }
-    
-    .select-all-btn:hover {
-        background-color: #218838;
-        transform: translateY(-1px);
+    .toggle-btn { background: #4A90E2; color: #fff; }
+    .toggle-btn:hover { background: #357ABD; }
+
+    .select-all-btn { background: #28A745; color: #fff; }
+    .select-all-btn:hover { background: #218838; }
+
+    .delete-btn { background: #DC3545; color: #fff; }
+    .delete-btn:hover { background: #C82333; }
+
+    .word-item {
+      background: #fff;
+      border: 1px solid #E0E6EB;
+      border-left: 5px solid #4A90E2;
+      padding: 12px 15px;
+      border-radius: 12px;
+      margin-top: 12px;
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+      transition: .2s;
     }
 
-    .delete-btn {
-      background-color: #DC3545; /* Red for delete */
-      color: white;
-      font-size: 14px;
-      width: 30px;
-      height: 30px;
+    .word-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
     }
 
-    .delete-btn:hover {
-      background-color: #C82333;
-      transform: translateY(-1px);
-    }
+    .word-title { font-weight: 700; font-size: 17px; }
+    .word-meaning { font-size: 14px; color: #666; }
 
     .word-container {
       overflow: hidden;
-      max-height: 1000px; 
-      opacity: 1;
-      transition: max-height 0.4s ease-out, opacity 0.4s ease-out; /* Smoother transitions */
+      transition: max-height .4s ease, opacity .4s ease;
     }
 
-    .collapsed {
-      max-height: 0 !important; 
-      opacity: 0;
-      pointer-events: none;
-      margin-top: 0 !important;
-    }
+    .collapsed { max-height: 0 !important; opacity: 0; }
 
     input[type="checkbox"] {
-      width: 22px; /* Slightly larger checkbox */
+      width: 22px;
       height: 22px;
-      min-width: 22px; /* Ensure it doesn't shrink */
-      min-height: 22px;
-      margin: 0;
       accent-color: #4A90E2;
-    }
-
-    .floating-btn {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      width: 60px; /* Larger FAB */
-      height: 60px;
-      background-color: #4A90E2;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      font-size: 30px; /* Larger icon */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.25);
-      cursor: pointer;
-      z-index: 1000;
-      transition: all 0.3s ease;
-    }
-    .floating-btn:hover {
-        background-color: #357ABD;
-        transform: scale(1.05);
-    }
-
-    .floating-menu {
-      position: fixed;
-      bottom: 95px; /* Adjust position relative to FAB */
-      right: 30px;
-      display: none;
-      flex-direction: column;
-      gap: 12px;
-      z-index: 999;
-    }
-
-    .floating-menu button {
-      background-color: #6C757D; /* Consistent secondary button style */
-      width: 50px; /* Larger menu buttons */
-      height: 50px;
-      font-size: 20px;
-      border-radius: 50%;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-    }
-    .floating-menu button:hover {
-        background-color: #5A6268;
-        transform: translateY(-1px);
     }
 
     .hidden { display: none; }
 
-    #shareBtn {
-      display: none;
-      background-color: #28A745; /* Green share button */
-      font-weight: 600;
-      margin-top: 20px;
-    }
-    #shareBtn:hover {
-        background-color: #218838;
-    }
-
-    /* Confirm Popup */
-    .confirm-popup {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6); /* Darker overlay */
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-
-    .confirm-box {
-      background: #fff;
-      padding: 30px;
-      border-radius: 16px;
-      max-width: 350px; /* Slightly larger box */
-      text-align: center;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-      animation: fadeIn 0.3s ease-out; /* Simple animation */
-    }
-    
-    .confirm-box p {
-        font-size: 18px;
-        margin-bottom: 25px;
-        font-weight: 500;
-        color: #444;
-    }
-
-    .confirm-box button {
-      width: 48%; /* Adjust for spacing */
-      margin: 0 5px; /* Add horizontal margin */
-      padding: 12px 0;
-      font-size: 16px;
-      font-weight: 600;
-    }
-
-    /* Animation for popup */
-    @keyframes fadeIn {
-        from { opacity: 0; transform: scale(0.9); }
-        to { opacity: 1; transform: scale(1); }
-    }
   </style>
 </head>
 <body>
+
   <div class="container">
     <h2>📘 Word Notepad</h2>
+
+    <!-- Add Section -->
     <div id="add-section">
       <input type="text" id="word" placeholder="Enter new word...">
       <textarea id="meaning" placeholder="Enter meaning or notes..."></textarea>
-      
+
       <label for="wordDate">📅 Choose Date:</label>
       <input type="date" id="wordDate">
-      
-      <button onclick="saveWord()">💾 Save Word</button>
+
+      <button id="saveBtn">💾 Save Word</button>
     </div>
 
-    <button id="toggleFeaturesBtn" onclick="toggleFeatures()">Show More Options ⚙️</button>
+    <button id="toggleFeaturesBtn">Show More Options ⚙️</button>
 
+    <!-- Extra Features -->
     <div id="extra-features" class="hidden">
       <label for="filterDate">📅 Filter by Date:</label>
       <input type="date" id="filterDate">
-      <button onclick="filterByDate()">Filter</button>
+      <button id="filterBtn">Filter</button>
 
       <h3>📚 All Saved Words</h3>
       <div id="wordList"></div>
 
-      <button id="shareBtn" onclick="shareSelected()">📤 Share Selected</button>
+      <button id="shareBtn" class="hidden">📤 Share Selected</button>
     </div>
   </div>
 
-  <div class="floating-menu" id="floatingMenu">
-    <button onclick="window.location.href='popup.html'">💾</button> <!-- Example for a new action -->
-  </div>
-  <button class="floating-btn" onclick="toggleFloatingMenu()">＋</button>
+<script>
+/* ----------------------------- CONFIG ----------------------------- */
+const API = "https://sheetdb.io/api/v1/1ttbhl00ef54o";
 
-  <div class="confirm-popup" id="confirmPopup">
-    <div class="confirm-box">
-      <p id="confirmText">Are you sure?</p>
-      <button style="background-color: #DC3545;" onclick="confirmDelete(true)">Yes, Delete</button>
-      <button style="background-color: #6C757D;" onclick="confirmDelete(false)">Cancel</button>
-    </div>
-  </div>
+/* -------------------------- HELPERS ------------------------------- */
+const $ = id => document.getElementById(id);
 
-  <script>
-    let wordToDelete = null;
+function createEl(tag, cls = "") {
+  const el = document.createElement(tag);
+  if (cls) el.className = cls;
+  return el;
+}
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const today = new Date().toISOString().split("T")[0];
-      document.getElementById("wordDate").value = today;
-      document.getElementById("filterDate").value = today;
-      loadWords();
+/* ------------------------ SAVE WORD ------------------------------ */
+async function saveWord() {
+  const word = $("word").value.trim();
+  const meaning = $("meaning").value.trim();
+  const date = $("wordDate").value;
+
+  if (!word || !meaning) return alert("Please enter word & meaning.");
+
+  const payload = {
+    data: [{
+      id: Date.now(),
+      word,
+      meaning,
+      date
+    }]
+  };
+
+  try {
+    await fetch(API, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(payload)
     });
 
-    function saveWord() {
-      const word = document.getElementById("word").value.trim();
-      const meaning = document.getElementById("meaning").value.trim();
-      const date = document.getElementById("wordDate").value;
+    $("word").value = "";
+    $("meaning").value = "";
+    loadWords();
+    alert("Word saved successfully!");
+  } catch (err) {
+    alert("Error saving word!");
+  }
+}
 
-      if (!word || !meaning) {
-        alert("Please enter both word and meaning!");
-        return;
-      }
+/* ------------------------ LOAD WORDS ----------------------------- */
+async function loadWords(filterDate = "") {
+  const list = $("wordList");
+  list.innerHTML = "";
 
-      const words = JSON.parse(localStorage.getItem("words") || "[]");
-      // Add a unique identifier (timestamp)
-      words.push({ word, meaning, date, id: Date.now() }); 
-      localStorage.setItem("words", JSON.stringify(words));
+  let data = [];
 
-      document.getElementById("word").value = "";
-      document.getElementById("meaning").value = "";
-      loadWords();
-      alert("✅ Word saved successfully!");
-    }
+  try {
+    const res = await fetch(API);
+    data = await res.json();
+  } catch {
+    return alert("Failed to load data.");
+  }
 
-    function loadWords(filterDate = "") {
-      const wordList = document.getElementById("wordList");
-      wordList.innerHTML = "";
-      const words = JSON.parse(localStorage.getItem("words") || "[]");
-      
-      const filtered = filterDate ? words.filter(w => w.date === filterDate) : words;
+  if (filterDate) data = data.filter(x => x.date === filterDate);
 
-      const grouped = {};
-      filtered.forEach(w => {
-        if (!grouped[w.date]) grouped[w.date] = [];
-        grouped[w.date].push(w);
-      });
+  const groups = {};
+  data.forEach(x => {
+    if (!groups[x.date]) groups[x.date] = [];
+    groups[x.date].push(x);
+  });
 
-      const sortedDates = Object.keys(grouped).sort((a,b) => new Date(b) - new Date(a));
+  Object.keys(groups)
+    .sort((a,b) => new Date(b) - new Date(a))
+    .forEach(date => renderGroup(date, groups[date]));
+}
 
-      sortedDates.forEach(date => {
-        const groupDiv = document.createElement("div");
-        groupDiv.classList.add("date-group");
+/* ------------------------ RENDER UI ------------------------------ */
+function renderGroup(date, items) {
+  const group = createEl("div", "date-group");
 
-        const header = document.createElement("div");
-        header.classList.add("date-header");
-        header.innerHTML = `📅 ${date}`;
-        
-        const headerBtns = document.createElement("div");
-        headerBtns.classList.add("header-btns");
-        
-        const selectAllBtn = document.createElement("button");
-        selectAllBtn.textContent = "✔";
-        selectAllBtn.classList.add("select-all-btn");
-        selectAllBtn.onclick = (e) => {
-            e.stopPropagation();
-            toggleSelectAll(groupDiv);
-        };
+  const header = createEl("div", "date-header");
+  header.innerHTML = `📅 ${date}`;
 
-        const toggleBtn = document.createElement("button");
-        toggleBtn.textContent = "▼";
-        toggleBtn.classList.add("toggle-btn");
+  const btns = createEl("div", "header-btns");
 
-        const wordContainer = document.createElement("div");
-        wordContainer.classList.add("word-container");
-        
-        wordContainer.style.maxHeight = '1000px'; 
+  const selectAll = createEl("button", "select-all-btn");
+  selectAll.textContent = "✔";
+  selectAll.onclick = () => toggleSelectAll(group);
 
-        toggleBtn.onclick = (e) => {
-            e.stopPropagation();
-            const isCollapsed = wordContainer.classList.toggle("collapsed");
-            
-            if (!isCollapsed) {
-                wordContainer.style.maxHeight = wordContainer.scrollHeight + 5 + "px";
-                toggleBtn.textContent = "▼";
-            } else {
-                wordContainer.style.maxHeight = wordContainer.scrollHeight + "px"; 
-                wordContainer.offsetHeight; 
-                wordContainer.style.maxHeight = "0";
-                toggleBtn.textContent = "▶";
-            }
-            toggleShareButton(); 
-        };
-        
-        headerBtns.appendChild(selectAllBtn);
-        headerBtns.appendChild(toggleBtn);
-        header.appendChild(headerBtns);
-        groupDiv.appendChild(header);
+  const toggle = createEl("button", "toggle-btn");
+  toggle.textContent = "▼";
 
-        grouped[date].forEach(item => {
-          const div = document.createElement("div");
-          div.classList.add("word-item");
-          div.dataset.id = item.id; 
+  const container = createEl("div", "word-container");
 
-          const checkbox = document.createElement("input");
-          checkbox.type = "checkbox";
-          checkbox.value = `${item.word}: ${item.meaning}`;
-          checkbox.dataset.id = item.id; 
-          checkbox.onchange = toggleShareButton;
+  toggle.onclick = () => {
+    const collapsed = container.classList.toggle("collapsed");
+    toggle.textContent = collapsed ? "▶" : "▼";
+  };
 
-          const info = document.createElement("div");
-          info.classList.add("word-info");
+  btns.append(selectAll, toggle);
+  header.append(btns);
+  group.append(header);
 
-          const title = document.createElement("div");
-          title.classList.add("word-title");
-          title.textContent = item.word;
+  items.forEach(item => group.append(renderWord(item)));
 
-          const meaning = document.createElement("div");
-          meaning.classList.add("word-meaning");
-          meaning.textContent = item.meaning;
+  group.append(container);
+  $("wordList").append(group);
 
-          const delBtn = document.createElement("button");
-          delBtn.textContent = "🗑";
-          delBtn.classList.add("delete-btn");
-          delBtn.onclick = () => showDeletePopup(item.word, item.date, item.id);
+  container.append(...group.querySelectorAll(".word-item"));
+  container.style.maxHeight = container.scrollHeight + "px";
+}
 
-          info.appendChild(title);
-          info.appendChild(meaning);
-          div.appendChild(checkbox);
-          div.appendChild(info);
-          div.appendChild(delBtn);
-          wordContainer.appendChild(div);
-        });
+function renderWord(item) {
+  const div = createEl("div", "word-item");
 
-        groupDiv.appendChild(wordContainer);
-        wordList.appendChild(groupDiv);
-        
-        wordContainer.style.maxHeight = wordContainer.scrollHeight + 5 + "px";
-      });
-      toggleShareButton();
-    }
-    
-    function toggleSelectAll(groupDiv) {
-        const checkboxes = groupDiv.querySelectorAll(".word-item input[type='checkbox']");
-        const allChecked = Array.from(checkboxes).every(cb => cb.checked);
-        
-        checkboxes.forEach(cb => {
-            cb.checked = !allChecked;
-        });
-        
-        toggleShareButton();
-    }
+  const chk = document.createElement("input");
+  chk.type = "checkbox";
+  chk.dataset.id = item.id;
 
-    function showDeletePopup(word, date, id) {
-      wordToDelete = { word, date, id }; 
-      document.getElementById("confirmText").textContent = `Are you sure you want to delete "${word}" from ${date}?`;
-      document.getElementById("confirmPopup").style.display = "flex";
-    }
+  const info = createEl("div", "word-info");
+  info.innerHTML = `
+    <div class="word-title">${item.word}</div>
+    <div class="word-meaning">${item.meaning}</div>
+  `;
 
-    function confirmDelete(confirm) {
-      document.getElementById("confirmPopup").style.display = "none";
-      if (confirm && wordToDelete) {
-        let words = JSON.parse(localStorage.getItem("words") || "[]");
-        
-        const targetIndex = words.findIndex(w => w.id === wordToDelete.id);
-        
-        if (targetIndex !== -1) {
-            words.splice(targetIndex, 1);
-            localStorage.setItem("words", JSON.stringify(words));
-            
-            const featuresHidden = document.getElementById("extra-features").classList.contains("hidden");
-            const filterToApply = featuresHidden ? "" : document.getElementById("filterDate").value;
-            
-            loadWords(filterToApply); 
-            alert("🗑️ Word deleted successfully!");
-        } else {
-            alert("Error: Word not found.");
-        }
-        wordToDelete = null;
-      }
-    }
+  const del = createEl("button", "delete-btn");
+  del.textContent = "🗑";
+  del.onclick = () => deleteWord(item.id);
 
-    function filterByDate() {
-      loadWords(document.getElementById("filterDate").value);
-    }
+  div.append(chk, info, del);
+  return div;
+}
 
-    function toggleFeatures() {
-      const section = document.getElementById("extra-features");
-      const btn = document.getElementById("toggleFeaturesBtn");
-      section.classList.toggle("hidden");
-      btn.textContent = section.classList.contains("hidden") ? "Show More Options ⚙️" : "Hide Options ❌";
-      
-      loadWords(); 
-    }
+/* ----------------------- DELETE WORD ----------------------------- */
+async function deleteWord(id) {
+  if (!confirm("Delete this word?")) return;
 
-    function toggleFloatingMenu() {
-      const menu = document.getElementById("floatingMenu");
-      menu.style.display = menu.style.display === "flex" ? "none" : "flex";
-    }
+  try {
+    await fetch(`${API}/id/${id}`, {method:"DELETE"});
+    loadWords();
+  } catch {
+    alert("Delete failed.");
+  }
+}
 
-    function toggleShareButton() {
-      const checkboxes = document.querySelectorAll("#wordList input[type='checkbox']");
-      const anyChecked = Array.from(checkboxes).some(cb => cb.checked);
-      document.getElementById("shareBtn").style.display = anyChecked ? "block" : "none";
-    }
+/* ----------------------- SELECT ALL ------------------------------ */
+function toggleSelectAll(group) {
+  const boxes = group.querySelectorAll("input[type=checkbox]");
+  const allChecked = [...boxes].every(b => b.checked);
+  boxes.forEach(b => b.checked = !allChecked);
+}
 
-    function shareSelected() {
-      const checkboxes = document.querySelectorAll("#wordList input[type='checkbox']:checked");
-      if (checkboxes.length === 0) {
-        alert("Please select at least one word to share!");
-        return;
-      }
+/* ----------------------- FILTER ------------------------------ */
+$("filterBtn").onclick = () => {
+  loadWords($("filterDate").value);
+};
 
-      const wordsData = Array.from(checkboxes).map(cb => {
-        const [word, meaning] = cb.value.split(": ");
-        const dateEl = cb.closest(".date-group").querySelector(".date-header");
-        const date = dateEl ? dateEl.textContent.replace("📅 ", "").trim() : "Unknown Date"; 
-        return `📌 ${word}\n📝 Meaning: ${meaning}\n📅 Date: ${date}`;
-      });
+/* ----------------------- SHOW/HIDE MORE ----------------------------- */
+$("toggleFeaturesBtn").onclick = () => {
+  $("extra-features").classList.toggle("hidden");
+};
 
-      const formattedText = "📘 Word Notepad\n\n" + wordsData.join("\n\n");
+/* ------------------------ EVENTS ------------------------------ */
+$("saveBtn").onclick = saveWord;
 
-      if (window.AndroidBridge && window.AndroidBridge.shareText) {
-        window.AndroidBridge.shareText(formattedText);
-      } else if (navigator.share) {
-        navigator.share({ title: "My Word Notes", text: formattedText }).catch(() => {});
-      } else {
-        copyToClipboard(formattedText);
-        alert("📋 Words copied to clipboard!");
-      }
-    }
+/* ------------------------ INIT ------------------------------ */
+loadWords();
+</script>
 
-    function copyToClipboard(text) {
-      const temp = document.createElement("textarea");
-      temp.value = text;
-      document.body.appendChild(temp);
-      temp.select();
-      document.execCommand("copy");
-      document.body.removeChild(temp);
-    }
-  </script>
 </body>
 </html>
