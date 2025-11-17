@@ -193,172 +193,127 @@
       <button id="shareBtn" class="hidden">📤 Share Selected</button>
     </div>
   </div>
+  <script>
+const API = "https://sheetdb.io/api/v1/ycmkoskcijn1o";
+const wordInput = document.getElementById("wordInput");
+const meaningInput = document.getElementById("meaningInput");
+const wordList = document.getElementById("wordList");
+const saveBtn = document.getElementById("saveBtn");
 
-<script>
-/* ----------------------------- CONFIG ----------------------------- */
-const API = "https://sheetdb.io/api/v1/1ttbhl00ef54o";
+// 🚀 Local cache for instant UI
+let cache = [];
 
-/* -------------------------- HELPERS ------------------------------- */
-const $ = id => document.getElementById(id);
+// ------------------------
+// ⭐ Load Words (Optimized)
+// ------------------------
+async function loadWords() {
+    try {
+        const res = await fetch(API);
+        cache = await res.json();
 
-function createEl(tag, cls = "") {
-  const el = document.createElement(tag);
-  if (cls) el.className = cls;
-  return el;
+        cache.sort((a, b) => a.word.localeCompare(b.word));
+        renderWords(cache);
+
+    } catch (err) {
+        console.error("Load Error:", err);
+    }
 }
 
-/* ------------------------ SAVE WORD ------------------------------ */
-async function saveWord() {
-  const word = $("word").value.trim();
-  const meaning = $("meaning").value.trim();
-  const date = $("wordDate").value;
+// ------------------------------
+// ⭐ Add Word (Fast + Optimized)
+// ------------------------------
+async function addWord() {
+    const word = wordInput.value.trim();
+    const meaning = meaningInput.value.trim();
+    const date = new Date().toISOString().split("T")[0];
+    const id = Date.now().toString();
 
-  if (!word || !meaning) return alert("Please enter word & meaning.");
+    if (!word || !meaning) return alert("Fill all fields!");
 
-  const payload = {
-    data: [{
-      id: Date.now(),
-      word,
-      meaning,
-      date
-    }]
-  };
+    const newEntry = { word, meaning, date, id };
 
-  try {
-    await fetch(API, {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(payload)
-    });
+    try {
+        await fetch(API, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ data: [newEntry] })
+        });
 
-    $("word").value = "";
-    $("meaning").value = "";
-    loadWords();
-    alert("Word saved successfully!");
-  } catch (err) {
-    alert("Error saving word!");
-  }
+        // Instant update UI without reload
+        cache.push(newEntry);
+        cache.sort((a, b) => a.word.localeCompare(b.word));
+        renderWords(cache);
+
+        wordInput.value = "";
+        meaningInput.value = "";
+
+    } catch (err) {
+        console.error("Save Error:", err);
+    }
 }
 
-/* ------------------------ LOAD WORDS ----------------------------- */
-async function loadWords(filterDate = "") {
-  const list = $("wordList");
-  list.innerHTML = "";
-
-  let data = [];
-
-  try {
-    const res = await fetch(API);
-    data = await res.json();
-  } catch {
-    return alert("Failed to load data.");
-  }
-
-  if (filterDate) data = data.filter(x => x.date === filterDate);
-
-  const groups = {};
-  data.forEach(x => {
-    if (!groups[x.date]) groups[x.date] = [];
-    groups[x.date].push(x);
-  });
-
-  Object.keys(groups)
-    .sort((a,b) => new Date(b) - new Date(a))
-    .forEach(date => renderGroup(date, groups[date]));
-}
-
-/* ------------------------ RENDER UI ------------------------------ */
-function renderGroup(date, items) {
-  const group = createEl("div", "date-group");
-
-  const header = createEl("div", "date-header");
-  header.innerHTML = `📅 ${date}`;
-
-  const btns = createEl("div", "header-btns");
-
-  const selectAll = createEl("button", "select-all-btn");
-  selectAll.textContent = "✔";
-  selectAll.onclick = () => toggleSelectAll(group);
-
-  const toggle = createEl("button", "toggle-btn");
-  toggle.textContent = "▼";
-
-  const container = createEl("div", "word-container");
-
-  toggle.onclick = () => {
-    const collapsed = container.classList.toggle("collapsed");
-    toggle.textContent = collapsed ? "▶" : "▼";
-  };
-
-  btns.append(selectAll, toggle);
-  header.append(btns);
-  group.append(header);
-
-  items.forEach(item => group.append(renderWord(item)));
-
-  group.append(container);
-  $("wordList").append(group);
-
-  container.append(...group.querySelectorAll(".word-item"));
-  container.style.maxHeight = container.scrollHeight + "px";
-}
-
-function renderWord(item) {
-  const div = createEl("div", "word-item");
-
-  const chk = document.createElement("input");
-  chk.type = "checkbox";
-  chk.dataset.id = item.id;
-
-  const info = createEl("div", "word-info");
-  info.innerHTML = `
-    <div class="word-title">${item.word}</div>
-    <div class="word-meaning">${item.meaning}</div>
-  `;
-
-  const del = createEl("button", "delete-btn");
-  del.textContent = "🗑";
-  del.onclick = () => deleteWord(item.id);
-
-  div.append(chk, info, del);
-  return div;
-}
-
-/* ----------------------- DELETE WORD ----------------------------- */
+// -----------------------------
+// ⭐ Delete Word (Optimized)
+// -----------------------------
 async function deleteWord(id) {
-  if (!confirm("Delete this word?")) return;
+    try {
+        await fetch(`${API}/id/${id}`, { method: "DELETE" });
 
-  try {
-    await fetch(`${API}/id/${id}`, {method:"DELETE"});
-    loadWords();
-  } catch {
-    alert("Delete failed.");
-  }
+        // Update UI instantly
+        cache = cache.filter(item => item.id !== id);
+        renderWords(cache);
+
+    } catch (err) {
+        console.error("Delete Error:", err);
+    }
 }
 
-/* ----------------------- SELECT ALL ------------------------------ */
-function toggleSelectAll(group) {
-  const boxes = group.querySelectorAll("input[type=checkbox]");
-  const allChecked = [...boxes].every(b => b.checked);
-  boxes.forEach(b => b.checked = !allChecked);
+// ------------------------------------
+// ⭐ Render Words (Fast DOM Rendering)
+// ------------------------------------
+function renderWords(list) {
+    const grouped = {};
+
+    // Grouping optimized - O(n)
+    for (const item of list) {
+        const letter = item.word[0].toUpperCase();
+        if (!grouped[letter]) grouped[letter] = [];
+        grouped[letter].push(item);
+    }
+
+    // Fast DOM building using fragments
+    const fragment = document.createDocumentFragment();
+
+    for (const letter of Object.keys(grouped).sort()) {
+        const section = document.createElement("div");
+        section.className = "section";
+
+        const heading = document.createElement("h2");
+        heading.textContent = letter;
+        section.appendChild(heading);
+
+        grouped[letter].forEach(item => {
+            const div = document.createElement("div");
+            div.className = "word-item";
+            div.innerHTML = `
+                <strong>${item.word}</strong> - ${item.meaning}
+                <button onclick="deleteWord('${item.id}')">Delete</button>
+            `;
+            section.appendChild(div);
+        });
+
+        fragment.appendChild(section);
+    }
+
+    wordList.innerHTML = "";
+    wordList.appendChild(fragment);
 }
 
-/* ----------------------- FILTER ------------------------------ */
-$("filterBtn").onclick = () => {
-  loadWords($("filterDate").value);
-};
+// Events
+saveBtn.addEventListener("click", addWord);
 
-/* ----------------------- SHOW/HIDE MORE ----------------------------- */
-$("toggleFeaturesBtn").onclick = () => {
-  $("extra-features").classList.toggle("hidden");
-};
-
-/* ------------------------ EVENTS ------------------------------ */
-$("saveBtn").onclick = saveWord;
-
-/* ------------------------ INIT ------------------------------ */
+// Load words on start
 loadWords();
-</script>
-
+  <script/>
 </body>
 </html>
