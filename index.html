@@ -4,604 +4,485 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>📘 Word Notepad</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
+    /* ------------------ OPTIMIZED CLEAN CSS ------------------ */
     body {
-      font-family: "Poppins", sans-serif;
-      background-color: #eef3f8;
+      font-family: 'Roboto', sans-serif;
+      background-color: #F5F7FA;
       margin: 0;
-      padding: 15px;
+      padding: 20px;
       color: #333;
+      line-height: 1.6;
     }
 
     .container {
-      max-width: 500px;
+      max-width: 550px;
       margin: auto;
       background: #fff;
-      padding: 15px;
-      border-radius: 12px;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
     }
 
     h2 {
       text-align: center;
-      color: #007bff;
-      font-size: 22px;
-      margin-bottom: 10px;
+      color: #4A90E2;
+      font-size: 26px;
+      margin-bottom: 20px;
+      font-weight: 700;
     }
 
     input, textarea, button {
       width: 100%;
-      padding: 10px;
-      margin-top: 8px;
-      margin-bottom: 8px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 15px;
-      outline: none;
-    }
-    
-    label {
-      font-size: 14px;
-      color: #555;
-      font-weight: 500;
-      display: block;
+      padding: 12px 15px;
       margin-top: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #DDE4E9;
+      border-radius: 10px;
+      font-size: 16px;
+      outline: none;
+      transition: all 0.3s ease;
+      font-family: 'Open Sans', sans-serif;
     }
 
-    textarea {
-      resize: none;
-      height: 70px;
+    input:focus, textarea:focus {
+      border-color: #4A90E2;
+      box-shadow: 0 0 0 3px rgba(74,144,226,0.2);
     }
 
     button {
-      background-color: #007bff;
+      background-color: #4A90E2;
       color: white;
       border: none;
       cursor: pointer;
-      transition: all 0.3s ease;
+      font-weight: 600;
+      letter-spacing: 0.5px;
     }
 
     button:hover {
-      background-color: #0056b3;
+      background-color: #357ABD;
+      box-shadow: 0 4px 10px rgba(74,144,226,0.3);
+      transform: translateY(-1px);
     }
 
-    /* Word container card */
-    .word-item {
-      background: linear-gradient(135deg, #e3f2fd, #f8fbff);
-      border-left: 4px solid #007bff;
-      padding: 10px 12px;
-      border-radius: 10px;
-      margin-top: 10px;
-      font-size: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center; 
-      gap: 8px;
-      position: relative;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    #toggleFeaturesBtn {
+      background-color: #6C757D;
     }
 
-    .word-item:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    #toggleFeaturesBtn:hover {
+      background-color: #5A6268;
     }
 
-    .word-info {
-      flex: 1;
-      margin-left: 8px;
-    }
-
-    .word-title {
-      font-weight: 600;
-      color: #0056b3;
-      margin-bottom: 3px;
-    }
-
-    .word-meaning {
-      color: #555;
-      font-size: 14px;
-      margin-bottom: 3px;
-    }
-    
-    /* Date group */
     .date-group {
-      background: #f0f7ff;
-      border: 2px solid #007bff33;
-      border-radius: 10px;
-      padding: 10px;
-      margin-top: 15px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-      position: relative;
+      background: #EAF3FC;
+      border: 1px solid #C4DFFB;
+      border-radius: 14px;
+      padding: 15px;
+      margin-top: 25px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.07);
     }
 
     .date-header {
-      font-weight: bold;
-      color: #0056b3;
-      margin-bottom: 10px;
-      position: relative;
+      font-weight: 700;
+      color: #2F5F8F;
+      font-size: 18px;
+      margin-bottom: 15px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    
-    .header-btns {
-        display: flex;
-        gap: 5px; 
-    }
 
+    .header-btns {
+      display: flex;
+      gap: 8px;
+    }
 
     .toggle-btn, .delete-btn, .select-all-btn {
       border: none;
       border-radius: 50%;
-      font-size: 14px; 
-      width: 28px;
-      height: 28px;
-      text-align: center;
+      width: 32px;
+      height: 32px;
+      font-size: 15px;
       cursor: pointer;
-      transition: 0.3s;
-      flex-shrink: 0;
-    }
-    
-    .toggle-btn {
-      background-color: #007bff;
-      color: white;
-    }
-
-    .toggle-btn:hover {
-      background-color: #0056b3;
-    }
-    
-    /* New Button Style */
-    .select-all-btn {
-        background-color: #17a2b8; 
-        color: white;
-        font-size: 14px;
-        line-height: 1;
-    }
-    
-    .select-all-btn:hover {
-        background-color: #138496;
-    }
-
-    .delete-btn {
-      background-color: #ff4d4d;
-      color: white;
-      font-size: 12px;
-      width: 26px;
-      height: 26px;
-    }
-
-    .delete-btn:hover {
-      background-color: #cc0000;
-    }
-
-    .word-container {
-      overflow: hidden;
-      max-height: 1000px; /* Initial large max-height for smooth expansion */
-      opacity: 1;
-      transition: max-height 0.3s ease, opacity 0.3s ease;
-    }
-
-    .collapsed {
-      max-height: 0 !important; /* Force collapse to 0 */
-      opacity: 0;
-      pointer-events: none;
-      margin-top: 0 !important;
-    }
-
-    input[type="checkbox"] {
-      width: 20px;
-      height: 20px;
-      transform: scale(1.1);
-      accent-color: #007bff;
-    }
-
-    .floating-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 56px;
-      height: 56px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      font-size: 26px;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-      cursor: pointer;
+      transition: .3s;
     }
 
-    .floating-menu {
-      position: fixed;
-      bottom: 85px;
-      right: 25px;
-      display: none;
-      flex-direction: column;
-      gap: 10px;
+    .toggle-btn { background: #4A90E2; color: #fff; }
+    .toggle-btn:hover { background: #357ABD; }
+
+    .select-all-btn { background: #28A745; color: #fff; }
+    .select-all-btn:hover { background: #218838; }
+
+    .delete-btn { background: #DC3545; color: #fff; }
+    .delete-btn:hover { background: #C82333; }
+
+    .word-item {
+      background: #fff;
+      border: 1px solid #E0E6EB;
+      border-left: 5px solid #4A90E2;
+      padding: 12px 15px;
+      border-radius: 12px;
+      margin-top: 12px;
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+      transition: .2s;
     }
 
-    .floating-menu button {
-      background-color: #0056b3;
-      width: 45px;
-      height: 45px;
-      font-size: 18px;
-      border-radius: 50%;
+    .word-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
+
+    .word-title { font-weight: 700; font-size: 17px; }
+    .word-meaning { font-size: 14px; color: #666; }
+
+    .word-container {
+      overflow: hidden;
+      transition: max-height .4s ease, opacity .4s ease;
+    }
+
+    .collapsed { max-height: 0 !important; opacity: 0; }
+
+    input[type="checkbox"] {
+      width: 22px;
+      height: 22px;
+      accent-color: #4A90E2;
     }
 
     .hidden { display: none; }
 
-    #shareBtn {
-      display: none;
-      background-color: #28a745;
-      font-weight: 600;
-    }
-
-    /* Confirm Popup */
-    .confirm-popup {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-
-    .confirm-box {
-      background: #fff;
-      padding: 20px;
-      border-radius: 12px;
-      max-width: 320px;
-      text-align: center;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-    }
-
-    .confirm-box button {
-      width: 45%;
-      margin: 10px 5px;
-    }
   </style>
 </head>
 <body>
+
   <div class="container">
     <h2>📘 Word Notepad</h2>
+
+    <!-- Add Section -->
     <div id="add-section">
       <input type="text" id="word" placeholder="Enter new word...">
       <textarea id="meaning" placeholder="Enter meaning or notes..."></textarea>
-      
+
       <label for="wordDate">📅 Choose Date:</label>
       <input type="date" id="wordDate">
-      
-      <button onclick="saveWord()">💾 Save Word</button>
+
+      <button id="saveBtn">💾 Save Word</button>
     </div>
 
-    <button id="toggleFeaturesBtn" onclick="toggleFeatures()">Show More Options ⚙️</button>
+    <button id="toggleFeaturesBtn">Show More Options ⚙️</button>
 
+    <!-- Extra Features -->
     <div id="extra-features" class="hidden">
       <label for="filterDate">📅 Filter by Date:</label>
       <input type="date" id="filterDate">
-      <button onclick="filterByDate()">Filter</button>
+      <button id="filterBtn">Filter</button>
 
       <h3>📚 All Saved Words</h3>
       <div id="wordList"></div>
 
-      <button id="shareBtn" onclick="shareSelected()">📤 Share Selected</button>
+      <button id="shareBtn" class="hidden">📤 Share Selected</button>
     </div>
   </div>
 
-  <div class="floating-menu" id="floatingMenu">
-    <button onclick="window.location.href='popup.html'">💿</button>
-  </div>
-  <button class="floating-btn" onclick="toggleFloatingMenu()">＋</button>
+<script>
+let wordToDelete = null;
 
-  <div class="confirm-popup" id="confirmPopup">
-    <div class="confirm-box">
-      <p id="confirmText">Are you sure?</p>
-      <button style="background-color: #ff4d4d;" onclick="confirmDelete(true)">Yes</button>
-      <button onclick="confirmDelete(false)">No</button>
-    </div>
-  </div>
+document.addEventListener("DOMContentLoaded", () => {
+  const today = new Date().toISOString().split("T")[0];
+  document.getElementById("wordDate").value = today;
+  document.getElementById("filterDate").value = today;
+  loadWords();
+});
 
-  <script>
-    let wordToDelete = null;
-    // SheetDB API Endpoint
-    const SHEETDB_URL = "https://sheetdb.io/api/v1/1V2UrDKy3KRd8L3dVelmrkanWN4V1AQaax0nXIRIA4Ts"; 
+//----------------------------------------
+// ✅ SAVE TO SHEETDB
+//----------------------------------------
+async function saveWord() {
+  const word = document.getElementById("word").value.trim();
+  const meaning = document.getElementById("meaning").value.trim();
+  const date = document.getElementById("wordDate").value;
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const today = new Date().toISOString().split("T")[0];
-      document.getElementById("wordDate").value = today;
-      document.getElementById("filterDate").value = today;
-      loadWords();
+  if (!word || !meaning) {
+    alert("Please enter both word and meaning!");
+    return;
+  }
+
+  const id = Date.now();
+
+  const data = {
+    data: [
+      { word, meaning, date, id }
+    ]
+  };
+
+  try {
+    await fetch("https://sheetdb.io/api/v1/owzpi949b6buz", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
     });
 
-    async function saveWord() {
-      const word = document.getElementById("word").value.trim();
-      const meaning = document.getElementById("meaning").value.trim();
-      const date = document.getElementById("wordDate").value;
+    document.getElementById("word").value = "";
+    document.getElementById("meaning").value = "";
+    loadWords();
+    alert("✅ Word saved successfully!");
+  } catch (err) {
+    alert("❌ Error saving to SheetDB");
+  }
+}
 
-      if (!word || !meaning) {
-        alert("Please enter both word and meaning!");
-        return;
-      }
+//----------------------------------------
+// ✅ LOAD FROM SHEETDB
+//----------------------------------------
+async function loadWords(filterDate = "") {
+  const wordList = document.getElementById("wordList");
+  wordList.innerHTML = "";
 
-      try {
-        const response = await fetch(SHEETDB_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            data: {
-              Word: word,
-              Meaning: meaning,
-              Date: date,
-              // SheetDB will automatically add an ID or row number,
-              // but we can add our own for consistent deletion logic if needed.
-              // For simplicity, we'll rely on SheetDB's row identification for deletion.
-            }
-          })
-        });
+  let words = [];
 
-        if (response.ok) {
-          document.getElementById("word").value = "";
-          document.getElementById("meaning").value = "";
-          loadWords();
-          alert("✅ Word saved successfully to SheetDB!");
-        } else {
-          const errorData = await response.json();
-          alert("Error saving word to SheetDB: " + JSON.stringify(errorData));
-        }
-      } catch (error) {
-        alert("Network error: " + error.message);
-      }
-    }
+  try {
+    const response = await fetch("https://sheetdb.io/api/v1/owzpi949b6buz");
+    words = await response.json();
+  } catch (err) {
+    alert("❌ Error loading data from SheetDB");
+    return;
+  }
 
-    async function loadWords(filterDate = "") {
-      const wordList = document.getElementById("wordList");
-      wordList.innerHTML = "";
-      
-      try {
-        const response = await fetch(SHEETDB_URL);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const words = await response.json(); // SheetDB returns an array of objects
-        
-        // Ensure words is an array and each item has the expected properties
-        if (!Array.isArray(words)) {
-          console.error("SheetDB response is not an array:", words);
-          alert("Error: Invalid data received from SheetDB.");
-          return;
-        }
+  if (filterDate) {
+    words = words.filter(w => w.date === filterDate);
+  }
 
-        const filtered = filterDate 
-          ? words.filter(w => w.Date === filterDate) // Use 'Date' as per SheetDB column
-          : words;
+  const grouped = {};
+  words.forEach(w => {
+    if (!grouped[w.date]) grouped[w.date] = [];
+    grouped[w.date].push(w);
+  });
 
-        const grouped = {};
-        filtered.forEach(w => {
-          // Use 'Date' from SheetDB for grouping
-          if (!grouped[w.Date]) grouped[w.Date] = [];
-          grouped[w.Date].push(w);
-        });
+  const sortedDates = Object.keys(grouped).sort((a, b) => new Date(b) - new Date(a));
 
-        const sortedDates = Object.keys(grouped).sort((a,b) => new Date(b) - new Date(a));
+  sortedDates.forEach(date => {
+    const groupDiv = document.createElement("div");
+    groupDiv.classList.add("date-group");
 
-        sortedDates.forEach(date => {
-          const groupDiv = document.createElement("div");
-          groupDiv.classList.add("date-group");
+    const header = document.createElement("div");
+    header.classList.add("date-header");
+    header.innerHTML = `📅 ${date}`;
 
-          const header = document.createElement("div");
-          header.classList.add("date-header");
-          header.innerHTML = `📅 ${date}`;
-          
-          const headerBtns = document.createElement("div");
-          headerBtns.classList.add("header-btns");
-          
-          const selectAllBtn = document.createElement("button");
-          selectAllBtn.textContent = "✔";
-          selectAllBtn.classList.add("select-all-btn");
-          selectAllBtn.onclick = (e) => {
-              e.stopPropagation();
-              toggleSelectAll(groupDiv);
-          };
+    const headerBtns = document.createElement("div");
+    headerBtns.classList.add("header-btns");
 
-          const toggleBtn = document.createElement("button");
-          toggleBtn.textContent = "▼";
-          toggleBtn.classList.add("toggle-btn");
+    const selectAllBtn = document.createElement("button");
+    selectAllBtn.textContent = "✔";
+    selectAllBtn.classList.add("select-all-btn");
+    selectAllBtn.onclick = (e) => {
+      e.stopPropagation();
+      toggleSelectAll(groupDiv);
+    };
 
-          const wordContainer = document.createElement("div");
-          wordContainer.classList.add("word-container");
-          
-          wordContainer.style.maxHeight = '1000px'; 
+    const toggleBtn = document.createElement("button");
+    toggleBtn.textContent = "▼";
+    toggleBtn.classList.add("toggle-btn");
 
-          toggleBtn.onclick = (e) => {
-              e.stopPropagation();
-              const isCollapsed = wordContainer.classList.toggle("collapsed");
-              
-              if (!isCollapsed) {
-                  wordContainer.style.maxHeight = wordContainer.scrollHeight + 5 + "px";
-                  toggleBtn.textContent = "▼";
-              } else {
-                  wordContainer.style.maxHeight = wordContainer.scrollHeight + "px";
-                  wordContainer.offsetHeight; 
-                  wordContainer.style.maxHeight = "0";
-                  toggleBtn.textContent = "▶";
-              }
-              toggleShareButton(); 
-          };
-          
-          headerBtns.appendChild(selectAllBtn);
-          headerBtns.appendChild(toggleBtn);
-          header.appendChild(headerBtns);
-          groupDiv.appendChild(header);
+    const wordContainer = document.createElement("div");
+    wordContainer.classList.add("word-container");
+    wordContainer.style.maxHeight = "1000px";
 
-          grouped[date].forEach(item => {
-            const div = document.createElement("div");
-            div.classList.add("word-item");
-            // SheetDB returns objects, if your sheet has an 'id' column, use that.
-            // Otherwise, we'll use 'Word' as a unique identifier for deletion (assuming unique words)
-            // Or you'd need to add a unique ID column in your Google Sheet.
-            div.dataset.word = item.Word; // Use the word itself as a key for deletion
-            div.dataset.date = item.Date; // Also pass date for deletion if needed
+    toggleBtn.onclick = (e) => {
+      e.stopPropagation();
+      const isCollapsed = wordContainer.classList.toggle("collapsed");
 
-            const checkbox = document.createElement("input");
-            checkbox.type = "checkbox";
-            // Use 'Word' and 'Meaning' as per SheetDB column names
-            checkbox.value = `${item.Word}: ${item.Meaning}`; 
-            checkbox.dataset.word = item.Word;
-            checkbox.dataset.date = item.Date;
-            checkbox.onchange = toggleShareButton;
-
-            const info = document.createElement("div");
-            info.classList.add("word-info");
-
-            const title = document.createElement("div");
-            title.classList.add("word-title");
-            title.textContent = item.Word;
-
-            const meaning = document.createElement("div");
-            meaning.classList.add("word-meaning");
-            meaning.textContent = item.Meaning;
-
-            const delBtn = document.createElement("button");
-            delBtn.textContent = "🗑";
-            delBtn.classList.add("delete-btn");
-            // Pass the word and date for deletion
-            delBtn.onclick = () => showDeletePopup(item.Word, item.Date);
-
-            info.appendChild(title);
-            info.appendChild(meaning);
-            div.appendChild(checkbox);
-            div.appendChild(info);
-            div.appendChild(delBtn);
-            wordContainer.appendChild(div);
-          });
-
-          groupDiv.appendChild(wordContainer);
-          wordList.appendChild(groupDiv);
-          
-          wordContainer.style.maxHeight = wordContainer.scrollHeight + 5 + "px";
-        });
-        toggleShareButton();
-
-      } catch (error) {
-        alert("Error loading words from SheetDB: " + error.message);
-        console.error("Error loading words:", error);
-      }
-    }
-    
-    function toggleSelectAll(groupDiv) {
-        const checkboxes = groupDiv.querySelectorAll(".word-item input[type='checkbox']");
-        const allChecked = Array.from(checkboxes).every(cb => cb.checked);
-        
-        checkboxes.forEach(cb => {
-            cb.checked = !allChecked;
-        });
-        
-        toggleShareButton();
-    }
-
-    function showDeletePopup(word, date) {
-      wordToDelete = { word, date }; 
-      document.getElementById("confirmText").textContent = `Delete word "${word}" from ${date}?`;
-      document.getElementById("confirmPopup").style.display = "flex";
-    }
-
-    async function confirmDelete(confirm) {
-      document.getElementById("confirmPopup").style.display = "none";
-      if (confirm && wordToDelete) {
-        try {
-          // SheetDB allows deleting by column value. We'll delete by 'Word' and 'Date'.
-          // This assumes that the combination of Word and Date is unique enough for your needs.
-          // If not, you'd need a truly unique 'id' column in your Google Sheet.
-          const response = await fetch(`${SHEETDB_URL}/Word/${wordToDelete.word}?Date=${wordToDelete.date}`, {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          });
-
-          if (response.ok) {
-            alert(`🗑️ Word "${wordToDelete.word}" deleted successfully from SheetDB!`);
-            const featuresHidden = document.getElementById("extra-features").classList.contains("hidden");
-            const filterToApply = featuresHidden ? "" : document.getElementById("filterDate").value;
-            loadWords(filterToApply); 
-          } else {
-            const errorData = await response.json();
-            alert("Error deleting word from SheetDB: " + JSON.stringify(errorData));
-          }
-        } catch (error) {
-          alert("Network error during deletion: " + error.message);
-        }
-        wordToDelete = null;
-      }
-    }
-
-
-    function filterByDate() {
-      loadWords(document.getElementById("filterDate").value);
-    }
-
-    function toggleFeatures() {
-      const section = document.getElementById("extra-features");
-      const btn = document.getElementById("toggleFeaturesBtn");
-      section.classList.toggle("hidden");
-      btn.textContent = section.classList.contains("hidden") ? "Show More Options ⚙️" : "Hide Options ❌";
-      
-      loadWords(); 
-    }
-
-    function toggleFloatingMenu() {
-      const menu = document.getElementById("floatingMenu");
-      menu.style.display = menu.style.display === "flex" ? "none" : "flex";
-    }
-
-    function toggleShareButton() {
-      const checkboxes = document.querySelectorAll("#wordList input[type='checkbox']");
-      const anyChecked = Array.from(checkboxes).some(cb => cb.checked);
-      document.getElementById("shareBtn").style.display = anyChecked ? "block" : "none";
-    }
-
-    function shareSelected() {
-      const checkboxes = document.querySelectorAll("#wordList input[type='checkbox']:checked");
-      if (checkboxes.length === 0) {
-        alert("Please select at least one word to share!");
-        return;
-      }
-
-      const wordsData = Array.from(checkboxes).map(cb => {
-        const [word, meaning] = cb.value.split(": ");
-        const dateEl = cb.closest(".date-group").querySelector(".date-header");
-        const date = dateEl ? dateEl.textContent.replace("📅 ", "").trim() : "Unknown Date"; 
-        return `📌 ${word}\n📝 Meaning: ${meaning}\n📅 Date: ${date}`;
-      });
-
-      const formattedText = "📘 Word Notepad\n\n" + wordsData.join("\n\n");
-
-      if (window.AndroidBridge && window.AndroidBridge.shareText) {
-        window.AndroidBridge.shareText(formattedText);
-      } else if (navigator.share) {
-        navigator.share({ title: "My Word Notes", text: formattedText }).catch(() => {});
+      if (!isCollapsed) {
+        wordContainer.style.maxHeight = wordContainer.scrollHeight + "px";
+        toggleBtn.textContent = "▼";
       } else {
-        copyToClipboard(formattedText);
-        alert("📋 Words copied to clipboard!");
+        wordContainer.style.maxHeight = wordContainer.scrollHeight + "px";
+        wordContainer.offsetHeight;
+        wordContainer.style.maxHeight = "0";
+        toggleBtn.textContent = "▶";
       }
-    }
 
-    function copyToClipboard(text) {
-      const temp = document.createElement("textarea");
-      temp.value = text;
-      document.body.appendChild(temp);
-      temp.select();
-      document.execCommand("copy");
-      document.body.removeChild(temp);
-    }
-  </script>
+      toggleShareButton();
+    };
+
+    headerBtns.appendChild(selectAllBtn);
+    headerBtns.appendChild(toggleBtn);
+    header.appendChild(headerBtns);
+    groupDiv.appendChild(header);
+
+    grouped[date].forEach(item => {
+      const div = document.createElement("div");
+      div.classList.add("word-item");
+      div.dataset.id = item.id;
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.value = `${item.word}: ${item.meaning}`;
+      checkbox.dataset.id = item.id;
+      checkbox.onchange = toggleShareButton;
+
+      const info = document.createElement("div");
+      info.classList.add("word-info");
+
+      const title = document.createElement("div");
+      title.classList.add("word-title");
+      title.textContent = item.word;
+
+      const meaning = document.createElement("div");
+      meaning.classList.add("word-meaning");
+      meaning.textContent = item.meaning;
+
+      const delBtn = document.createElement("button");
+      delBtn.textContent = "🗑";
+      delBtn.classList.add("delete-btn");
+      delBtn.onclick = () => showDeletePopup(item.word, item.date, item.id);
+
+      info.appendChild(title);
+      info.appendChild(meaning);
+
+      div.appendChild(checkbox);
+      div.appendChild(info);
+      div.appendChild(delBtn);
+
+      wordContainer.appendChild(div);
+    });
+
+    groupDiv.appendChild(wordContainer);
+    wordList.appendChild(groupDiv);
+
+    wordContainer.style.maxHeight = wordContainer.scrollHeight + "px";
+  });
+
+  toggleShareButton();
+}
+
+//----------------------------------------
+// ✅ SELECT ALL CHECKBOXES IN A DATE GROUP
+//----------------------------------------
+function toggleSelectAll(groupDiv) {
+  const checkboxes = groupDiv.querySelectorAll(".word-item input[type='checkbox']");
+  const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+
+  checkboxes.forEach(cb => {
+    cb.checked = !allChecked;
+  });
+
+  toggleShareButton();
+}
+
+//----------------------------------------
+// ✅ DELETE WORD (POPUP CONFIRM)
+//----------------------------------------
+function showDeletePopup(word, date, id) {
+  wordToDelete = { word, date, id };
+  document.getElementById("confirmText").textContent = `Delete word "${word}" from ${date}?`;
+  document.getElementById("confirmPopup").style.display = "flex";
+}
+
+//----------------------------------------
+// ✅ DELETE FROM SHEETDB
+//----------------------------------------
+async function confirmDelete(confirm) {
+  document.getElementById("confirmPopup").style.display = "none";
+
+  if (!confirm || !wordToDelete) return;
+
+  try {
+    await fetch(`https://sheetdb.io/api/v1/owzpi949b6buz/id/${wordToDelete.id}`, {
+      method: "DELETE"
+    });
+
+    const featuresHidden = document.getElementById("extra-features").classList.contains("hidden");
+    const filterToApply = featuresHidden ? "" : document.getElementById("filterDate").value;
+
+    loadWords(filterToApply);
+    alert("🗑️ Word deleted successfully!");
+  } catch (err) {
+    alert("❌ Error deleting from SheetDB");
+  }
+
+  wordToDelete = null;
+}
+
+//----------------------------------------
+// FILTER BY DATE
+//----------------------------------------
+function filterByDate() {
+  loadWords(document.getElementById("filterDate").value);
+}
+
+//----------------------------------------
+// SHOW/HIDE EXTRA OPTIONS
+//----------------------------------------
+function toggleFeatures() {
+  const section = document.getElementById("extra-features");
+  const btn = document.getElementById("toggleFeaturesBtn");
+  section.classList.toggle("hidden");
+  btn.textContent = section.classList.contains("hidden")
+    ? "Show More Options ⚙️"
+    : "Hide Options ❌";
+  loadWords();
+}
+
+//----------------------------------------
+function toggleFloatingMenu() {
+  const menu = document.getElementById("floatingMenu");
+  menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+}
+
+//----------------------------------------
+function toggleShareButton() {
+  const checkboxes = document.querySelectorAll("#wordList input[type='checkbox']");
+  const anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+  document.getElementById("shareBtn").style.display = anyChecked ? "block" : "none";
+}
+
+//----------------------------------------
+function shareSelected() {
+  const checkboxes = document.querySelectorAll("#wordList input[type='checkbox']:checked");
+  if (checkboxes.length === 0) {
+    alert("Please select at least one word to share!");
+    return;
+  }
+
+  const wordsData = Array.from(checkboxes).map(cb => {
+    const [word, meaning] = cb.value.split(": ");
+    const dateEl = cb.closest(".date-group").querySelector(".date-header");
+    const date = dateEl ? dateEl.textContent.replace("📅 ", "").trim() : "Unknown Date";
+    return `📌 ${word}\n📝 Meaning: ${meaning}\n📅 Date: ${date}`;
+  });
+
+  const formattedText = "📘 Word Notepad\n\n" + wordsData.join("\n\n");
+
+  if (window.AndroidBridge && window.AndroidBridge.shareText) {
+    window.AndroidBridge.shareText(formattedText);
+  } else if (navigator.share) {
+    navigator.share({ title: "My Word Notes", text: formattedText }).catch(() => {});
+  } else {
+    copyToClipboard(formattedText);
+    alert("📋 Words copied to clipboard!");
+  }
+}
+
+//----------------------------------------
+function copyToClipboard(text) {
+  const temp = document.createElement("textarea");
+  temp.value = text;
+  document.body.appendChild(temp);
+  temp.select();
+  document.execCommand("copy");
+  document.body.removeChild(temp);
+}
+</script>
+
 </body>
 </html>
